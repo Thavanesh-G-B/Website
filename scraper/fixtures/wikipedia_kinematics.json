@@ -1,0 +1,13 @@
+{
+  "batchcomplete": "",
+  "query": {
+    "pages": {
+      "17501": {
+        "pageid": 17501,
+        "ns": 0,
+        "title": "Kinematics",
+        "extract": "Kinematics is a subfield of physics and mathematics, developed in classical mechanics, that describes the motion of points, bodies, and systems of bodies without considering the forces that cause them to move.\n\nKinematics, as a field of study, is often referred to as the \"geometry of motion\" and is occasionally seen as a branch of mathematics. A kinematics problem begins by describing the geometry of the system and declaring the initial conditions of any known values of position, velocity and/or acceleration of points within the system."
+      }
+    }
+  }
+}

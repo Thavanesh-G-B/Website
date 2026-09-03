@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %}Search{% if q %} - {{ q }}{% endif %}{% endblock %}
+{% block content %}
+  <h1>Search</h1>
+
+  {% if q %}
+    <p class="muted">{{ results|length }} result(s) for "{{ q }}"</p>
+  {% endif %}
+
+  {% for item in results %}
+    <article class="content-item {{ item.type }} search-result">
+      <p class="crumb">{{ item.topic.subject.name }} &middot; Class {{ item.topic.class_level }} &middot; {{ item.topic.name }}</p>
+      <h3><a href="{{ url_for('topic_view', topic_id=item.topic_id) }}#item-{{ item.id }}">{{ item.title }}</a></h3>
+      <span class="badge">{{ 'Concept' if item.type == 'concept' else 'Practice Question' }}</span>
+      <p class="body snippet">{{ item.body[:280] }}{% if item.body|length > 280 %}...{% endif %}</p>
+    </article>
+  {% endfor %}
+
+  {% if q and not results %}
+    <div class="empty-state"><p>No matches. Try another term, or scrape more content with the CLI.</p></div>
+  {% endif %}
+{% endblock %}

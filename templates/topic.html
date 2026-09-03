@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block title %}{{ topic.name }}{% endblock %}
+{% block content %}
+  <nav class="breadcrumb">
+    <a href="{{ url_for('index') }}">Home</a> /
+    <a href="{{ url_for('subject_view', slug=topic.subject.slug, class_level=topic.class_level) }}">{{ topic.subject.name }} &middot; Class {{ topic.class_level }}</a>
+    / {{ topic.name }}
+  </nav>
+  <h1>{{ topic.name }}</h1>
+
+  <div class="type-filter">
+    <a class="{{ 'active' if not active_type }}" href="{{ url_for('topic_view', topic_id=topic.id) }}">All</a>
+    <a class="{{ 'active' if active_type == 'concept' }}" href="{{ url_for('topic_view', topic_id=topic.id, type='concept') }}">Concepts</a>
+    <a class="{{ 'active' if active_type == 'practice_question' }}" href="{{ url_for('topic_view', topic_id=topic.id, type='practice_question') }}">Practice Questions</a>
+  </div>
+
+  {% if not items %}
+    <div class="empty-state"><p>Nothing here yet for this filter.</p></div>
+  {% endif %}
+
+  {% for item in items %}
+    <article class="content-item {{ item.type }}" id="item-{{ item.id }}">
+      <h3>{{ item.title }}</h3>
+      <span class="badge">{{ 'Concept' if item.type == 'concept' else 'Practice Question' }}</span>
+      <div class="body">{{ item.body }}</div>
+
+      {% if item.options_list %}
+        <ol class="options" type="a">
+          {% for option in item.options_list %}<li>{{ option }}</li>{% endfor %}
+        </ol>
+      {% endif %}
+
+      {% if item.answer %}
+        <details class="answer">
+          <summary>Show answer</summary>
+          <p>{{ item.answer }}</p>
+        </details>
+      {% endif %}
+
+      {% if item.source_url %}
+        <p class="source">Source:
+          <a href="{{ item.source_url }}" target="_blank" rel="noopener noreferrer">{{ item.source_name or item.source_url }}</a>
+          {% if item.license %}&middot; {{ item.license }}{% endif %}
+        </p>
+      {% endif %}
+    </article>
+  {% endfor %}
+{% endblock %}

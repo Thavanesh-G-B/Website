@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}Study Library{% endblock %}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="{{ url_for('index') }}">📚 Study Library</a>
+    <form class="search-form" action="{{ url_for('search') }}" method="get">
+      <input type="search" name="q" placeholder="Search concepts &amp; questions..." value="{{ request.args.get('q', '') }}">
+      <button type="submit">Search</button>
+    </form>
+  </header>
+
+  <main class="container">
+    {% block content %}{% endblock %}
+  </main>
+
+  <footer class="site-footer">
+    <p>Local study library &middot; content pulled by the scraper from open sources, with provenance shown on every item.</p>
+  </footer>
+</body>
+</html>

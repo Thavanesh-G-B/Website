@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %}{{ subject.name }} - Class {{ class_level }}{% endblock %}
+{% block content %}
+  <nav class="breadcrumb"><a href="{{ url_for('index') }}">Home</a> / {{ subject.name }} / Class {{ class_level }}</nav>
+  <h1>{{ subject.name }} &middot; Class {{ class_level }}</h1>
+
+  {% if not topics %}
+    <div class="empty-state">
+      <p>No topics scraped yet for this subject/class. Try:</p>
+      <pre>python -m scraper.run_scraper --subject "{{ subject.name }}" --class-level {{ class_level }}</pre>
+    </div>
+  {% endif %}
+
+  <ul class="topic-list">
+    {% for topic in topics %}
+      <li>
+        <a href="{{ url_for('topic_view', topic_id=topic.id) }}">{{ topic.name }}</a>
+        <span class="count">{{ topic_counts.get(topic.id, 0) }} items</span>
+      </li>
+    {% endfor %}
+  </ul>
+{% endblock %}

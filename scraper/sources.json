@@ -1,0 +1,852 @@
+[
+  {
+    "subject": "Math",
+    "class_level": 11,
+    "topic": "Sets",
+    "type": "concept",
+    "source": "wikipedia",
+    "wikipedia_title": "Set (mathematics)"
+  },
+  {
+    "subject": "Math",
+    "class_level": 11,
+    "topic": "Relations and Functions",
+    "type": "concept",
+    "source": "wikipedia",
+    "wikipedia_title": "Function (mathematics)"
+  },
+  {
+    "subject": "Math",
+    "class_level": 11,
+    "topic": "Trigonometric Functions",
+    "type": "concept",
+    "source": "wikipedia",
+    "wikipedia_title": "Trigonometric functions"
+  },
+  {
+    "subject": "Math",
+    "class_level": 11,
+    "topic": "Complex Numbers",
+    "type": "concept",
+    "source": "wikipedia",
+    "wikipedia_title": "Complex number"
+  },
+  {
+    "subject": "Math",
+    "class_level": 11,
+    "topic": "Linear Inequalities",
+    "type": "concept",
+    "source": "wikipedia",
+    "wikipedia_title": "Linear inequality"
+  },
+  {
+    "subject": "Math",
+    "class_level": 11,
+    "topic": "Permutations and Combinations",
+    "type": "concept",
+    "source": "wikipedia",
+    "wikipedia_title": "Permutation"
+  },
+  {
+    "subject": "Math",
+    "class_level": 11,
+    "topic": "Binomial Theorem",
+    "type": "concept",
+    "source": "wikipedia",
+    "wikipedia_title": "Binomial theorem"
+  },
+  {
+    "subject": "Math",
+    "class_level": 11,
+    "topic": "Sequences and Series",
+    "type": "concept",
+    "source": "wikipedia",
+    "wikipedia_title": "Arithmetic progression"
+  },
+  {
+    "subject": "Math",
+    "class_level": 11,
+    "topic": "Straight Lines",
+    "type": "concept",
+    "source": "wikipedia",
+    "wikipedia_title": "Line (geometry)"
+  },
+  {
+    "subject": "Math",
+    "class_level": 11,
+    "topic": "Conic Sections",
+    "type": "concept",
+    "source": "wikipedia",
+    "wikipedia_title": "Conic section"
+  },
+  {
+    "subject": "Math",
+    "class_level": 11,
+    "topic": "Limits and Derivatives",
+    "type": "concept",
+    "source": "wikipedia",
+    "wikipedia_title": "Derivative"
+  },
+  {
+    "subject": "Math",
+    "class_level": 12,
+    "topic": "Inverse Trigonometric Functions",
+    "type": "concept",
+    "source": "wikipedia",
+    "wikipedia_title": "Inverse trigonometric functions"
+  },
+  {
+    "subject": "Math",
+    "class_level": 12,
+    "topic": "Matrices",
+    "type": "concept",
+    "source": "wikipedia",
+    "wikipedia_title": "Matrix (mathematics)"
+  },
+  {
+    "subject": "Math",
+    "class_level": 12,
+    "topic": "Determinants",
+    "type": "concept",
+    "source": "wikipedia",
+    "wikipedia_title": "Determinant"
+  },
+  {
+    "subject": "Math",
+    "class_level": 12,
+    "topic": "Continuity and Differentiability",
+    "type": "concept",
+    "source": "wikipedia",
+    "wikipedia_title": "Continuous function"
+  },
+  {
+    "subject": "Math",
+    "class_level": 12,
+    "topic": "Applications of Derivatives",
+    "type": "concept",
+    "source": "wikipedia",
+    "wikipedia_title": "Derivative test"
+  },
+  {
+    "subject": "Math",
+    "class_level": 12,
+    "topic": "Integrals",
+    "type": "concept",
+    "source": "wikipedia",
+    "wikipedia_title": "Integral"
+  },
+  {
+    "subject": "Math",
+    "class_level": 12,
+    "topic": "Differential Equations",
+    "type": "concept",
+    "source": "wikipedia",
+    "wikipedia_title": "Differential equation"
+  },
+  {
+    "subject": "Math",
+    "class_level": 12,
+    "topic": "Vector Algebra",
+    "type": "concept",
+    "source": "wikipedia",
+    "wikipedia_title": "Euclidean vector"
+  },
+  {
+    "subject": "Math",
+    "class_level": 12,
+    "topic": "Three Dimensional Geometry",
+    "type": "concept",
+    "source": "wikipedia",
+    "wikipedia_title": "Analytic geometry"
+  },
+  {
+    "subject": "Math",
+    "class_level": 12,
+    "topic": "Probability",
+    "type": "concept",
+    "source": "wikipedia",
+    "wikipedia_title": "Probability"
+  },
+  {
+    "subject": "Physics",
+    "class_level": 11,
+    "topic": "Units and Measurement",
+    "type": "concept",
+    "source": "wikipedia",
+    "wikipedia_title": "International System of Units"
+  },
+  {
+    "subject": "Physics",
+    "class_level": 11,
+    "topic": "Motion in a Straight Line",
+    "type": "concept",
+    "source": "wikipedia",
+    "wikipedia_title": "Kinematics"
+  },
+  {
+    "subject": "Physics",
+    "class_level": 11,
+    "topic": "Laws of Motion",
+    "type": "concept",
+    "source": "wikipedia",
+    "wikipedia_title": "Newton's laws of motion"
+  },
+  {
+    "subject": "Physics",
+    "class_level": 11,
+    "topic": "Work, Energy and Power",
+    "type": "concept",
+    "source": "wikipedia",
+    "wikipedia_title": "Work (physics)"
+  },
+  {
+    "subject": "Physics",
+    "class_level": 11,
+    "topic": "Rotational Motion",
+    "type": "concept",
+    "source": "wikipedia",
+    "wikipedia_title": "Angular momentum"
+  },
+  {
+    "subject": "Physics",
+    "class_level": 11,
+    "topic": "Gravitation",
+    "type": "concept",
+    "source": "wikipedia",
+    "wikipedia_title": "Gravity"
+  },
+  {
+    "subject": "Physics",
+    "class_level": 11,
+    "topic": "Mechanical Properties of Solids",
+    "type": "concept",
+    "source": "wikipedia",
+    "wikipedia_title": "Elasticity (physics)"
+  },
+  {
+    "subject": "Physics",
+    "class_level": 11,
+    "topic": "Thermodynamics",
+    "type": "concept",
+    "source": "wikipedia",
+    "wikipedia_title": "Thermodynamics"
+  },
+  {
+    "subject": "Physics",
+    "class_level": 11,
+    "topic": "Kinetic Theory",
+    "type": "concept",
+    "source": "wikipedia",
+    "wikipedia_title": "Kinetic theory of gases"
+  },
+  {
+    "subject": "Physics",
+    "class_level": 11,
+    "topic": "Oscillations",
+    "type": "concept",
+    "source": "wikipedia",
+    "wikipedia_title": "Oscillation"
+  },
+  {
+    "subject": "Physics",
+    "class_level": 11,
+    "topic": "Waves",
+    "type": "concept",
+    "source": "wikipedia",
+    "wikipedia_title": "Wave"
+  },
+  {
+    "subject": "Physics",
+    "class_level": 12,
+    "topic": "Electric Charges and Fields",
+    "type": "concept",
+    "source": "wikipedia",
+    "wikipedia_title": "Electric charge"
+  },
+  {
+    "subject": "Physics",
+    "class_level": 12,
+    "topic": "Electrostatic Potential and Capacitance",
+    "type": "concept",
+    "source": "wikipedia",
+    "wikipedia_title": "Electric potential"
+  },
+  {
+    "subject": "Physics",
+    "class_level": 12,
+    "topic": "Current Electricity",
+    "type": "concept",
+    "source": "wikipedia",
+    "wikipedia_title": "Electric current"
+  },
+  {
+    "subject": "Physics",
+    "class_level": 12,
+    "topic": "Moving Charges and Magnetism",
+    "type": "concept",
+    "source": "wikipedia",
+    "wikipedia_title": "Magnetic field"
+  },
+  {
+    "subject": "Physics",
+    "class_level": 12,
+    "topic": "Electromagnetic Induction",
+    "type": "concept",
+    "source": "wikipedia",
+    "wikipedia_title": "Electromagnetic induction"
+  },
+  {
+    "subject": "Physics",
+    "class_level": 12,
+    "topic": "Alternating Current",
+    "type": "concept",
+    "source": "wikipedia",
+    "wikipedia_title": "Alternating current"
+  },
+  {
+    "subject": "Physics",
+    "class_level": 12,
+    "topic": "Electromagnetic Waves",
+    "type": "concept",
+    "source": "wikipedia",
+    "wikipedia_title": "Electromagnetic radiation"
+  },
+  {
+    "subject": "Physics",
+    "class_level": 12,
+    "topic": "Ray Optics",
+    "type": "concept",
+    "source": "wikipedia",
+    "wikipedia_title": "Geometrical optics"
+  },
+  {
+    "subject": "Physics",
+    "class_level": 12,
+    "topic": "Wave Optics",
+    "type": "concept",
+    "source": "wikipedia",
+    "wikipedia_title": "Physical optics"
+  },
+  {
+    "subject": "Physics",
+    "class_level": 12,
+    "topic": "Dual Nature of Radiation and Matter",
+    "type": "concept",
+    "source": "wikipedia",
+    "wikipedia_title": "Wave-particle duality"
+  },
+  {
+    "subject": "Physics",
+    "class_level": 12,
+    "topic": "Atoms",
+    "type": "concept",
+    "source": "wikipedia",
+    "wikipedia_title": "Bohr model"
+  },
+  {
+    "subject": "Physics",
+    "class_level": 12,
+    "topic": "Nuclei",
+    "type": "concept",
+    "source": "wikipedia",
+    "wikipedia_title": "Atomic nucleus"
+  },
+  {
+    "subject": "Physics",
+    "class_level": 12,
+    "topic": "Semiconductor Electronics",
+    "type": "concept",
+    "source": "wikipedia",
+    "wikipedia_title": "Semiconductor"
+  },
+  {
+    "subject": "Chemistry",
+    "class_level": 11,
+    "topic": "Some Basic Concepts of Chemistry",
+    "type": "concept",
+    "source": "wikipedia",
+    "wikipedia_title": "Stoichiometry"
+  },
+  {
+    "subject": "Chemistry",
+    "class_level": 11,
+    "topic": "Structure of Atom",
+    "type": "concept",
+    "source": "wikipedia",
+    "wikipedia_title": "Atomic theory"
+  },
+  {
+    "subject": "Chemistry",
+    "class_level": 11,
+    "topic": "Classification of Elements and Periodicity",
+    "type": "concept",
+    "source": "wikipedia",
+    "wikipedia_title": "Periodic table"
+  },
+  {
+    "subject": "Chemistry",
+    "class_level": 11,
+    "topic": "Chemical Bonding and Molecular Structure",
+    "type": "concept",
+    "source": "wikipedia",
+    "wikipedia_title": "Chemical bond"
+  },
+  {
+    "subject": "Chemistry",
+    "class_level": 11,
+    "topic": "States of Matter",
+    "type": "concept",
+    "source": "wikipedia",
+    "wikipedia_title": "State of matter"
+  },
+  {
+    "subject": "Chemistry",
+    "class_level": 11,
+    "topic": "Thermodynamics",
+    "type": "concept",
+    "source": "wikipedia",
+    "wikipedia_title": "Chemical thermodynamics"
+  },
+  {
+    "subject": "Chemistry",
+    "class_level": 11,
+    "topic": "Equilibrium",
+    "type": "concept",
+    "source": "wikipedia",
+    "wikipedia_title": "Chemical equilibrium"
+  },
+  {
+    "subject": "Chemistry",
+    "class_level": 11,
+    "topic": "Redox Reactions",
+    "type": "concept",
+    "source": "wikipedia",
+    "wikipedia_title": "Redox"
+  },
+  {
+    "subject": "Chemistry",
+    "class_level": 11,
+    "topic": "Hydrogen",
+    "type": "concept",
+    "source": "wikipedia",
+    "wikipedia_title": "Hydrogen"
+  },
+  {
+    "subject": "Chemistry",
+    "class_level": 11,
+    "topic": "Organic Chemistry Basics",
+    "type": "concept",
+    "source": "wikipedia",
+    "wikipedia_title": "Organic chemistry"
+  },
+  {
+    "subject": "Chemistry",
+    "class_level": 11,
+    "topic": "Hydrocarbons",
+    "type": "concept",
+    "source": "wikipedia",
+    "wikipedia_title": "Hydrocarbon"
+  },
+  {
+    "subject": "Chemistry",
+    "class_level": 12,
+    "topic": "Solid State",
+    "type": "concept",
+    "source": "wikipedia",
+    "wikipedia_title": "Crystal structure"
+  },
+  {
+    "subject": "Chemistry",
+    "class_level": 12,
+    "topic": "Solutions",
+    "type": "concept",
+    "source": "wikipedia",
+    "wikipedia_title": "Solution (chemistry)"
+  },
+  {
+    "subject": "Chemistry",
+    "class_level": 12,
+    "topic": "Electrochemistry",
+    "type": "concept",
+    "source": "wikipedia",
+    "wikipedia_title": "Electrochemistry"
+  },
+  {
+    "subject": "Chemistry",
+    "class_level": 12,
+    "topic": "Chemical Kinetics",
+    "type": "concept",
+    "source": "wikipedia",
+    "wikipedia_title": "Chemical kinetics"
+  },
+  {
+    "subject": "Chemistry",
+    "class_level": 12,
+    "topic": "Surface Chemistry",
+    "type": "concept",
+    "source": "wikipedia",
+    "wikipedia_title": "Colloid"
+  },
+  {
+    "subject": "Chemistry",
+    "class_level": 12,
+    "topic": "d and f Block Elements",
+    "type": "concept",
+    "source": "wikipedia",
+    "wikipedia_title": "Transition metal"
+  },
+  {
+    "subject": "Chemistry",
+    "class_level": 12,
+    "topic": "Coordination Compounds",
+    "type": "concept",
+    "source": "wikipedia",
+    "wikipedia_title": "Coordination complex"
+  },
+  {
+    "subject": "Chemistry",
+    "class_level": 12,
+    "topic": "Haloalkanes and Haloarenes",
+    "type": "concept",
+    "source": "wikipedia",
+    "wikipedia_title": "Haloalkane"
+  },
+  {
+    "subject": "Chemistry",
+    "class_level": 12,
+    "topic": "Alcohols, Phenols and Ethers",
+    "type": "concept",
+    "source": "wikipedia",
+    "wikipedia_title": "Alcohol"
+  },
+  {
+    "subject": "Chemistry",
+    "class_level": 12,
+    "topic": "Aldehydes, Ketones and Carboxylic Acids",
+    "type": "concept",
+    "source": "wikipedia",
+    "wikipedia_title": "Aldehyde"
+  },
+  {
+    "subject": "Chemistry",
+    "class_level": 12,
+    "topic": "Amines",
+    "type": "concept",
+    "source": "wikipedia",
+    "wikipedia_title": "Amine"
+  },
+  {
+    "subject": "Chemistry",
+    "class_level": 12,
+    "topic": "Biomolecules",
+    "type": "concept",
+    "source": "wikipedia",
+    "wikipedia_title": "Biomolecule"
+  },
+  {
+    "subject": "Chemistry",
+    "class_level": 12,
+    "topic": "Polymers",
+    "type": "concept",
+    "source": "wikipedia",
+    "wikipedia_title": "Polymer"
+  },
+  {
+    "subject": "Biology",
+    "class_level": 11,
+    "topic": "The Living World",
+    "type": "concept",
+    "source": "wikipedia",
+    "wikipedia_title": "Taxonomy (biology)"
+  },
+  {
+    "subject": "Biology",
+    "class_level": 11,
+    "topic": "Biological Classification",
+    "type": "concept",
+    "source": "wikipedia",
+    "wikipedia_title": "Biological classification"
+  },
+  {
+    "subject": "Biology",
+    "class_level": 11,
+    "topic": "Plant Kingdom",
+    "type": "concept",
+    "source": "wikipedia",
+    "wikipedia_title": "Plant"
+  },
+  {
+    "subject": "Biology",
+    "class_level": 11,
+    "topic": "Animal Kingdom",
+    "type": "concept",
+    "source": "wikipedia",
+    "wikipedia_title": "Animal"
+  },
+  {
+    "subject": "Biology",
+    "class_level": 11,
+    "topic": "Cell: The Unit of Life",
+    "type": "concept",
+    "source": "wikipedia",
+    "wikipedia_title": "Cell (biology)"
+  },
+  {
+    "subject": "Biology",
+    "class_level": 11,
+    "topic": "Cell Cycle and Cell Division",
+    "type": "concept",
+    "source": "wikipedia",
+    "wikipedia_title": "Cell cycle"
+  },
+  {
+    "subject": "Biology",
+    "class_level": 11,
+    "topic": "Photosynthesis in Higher Plants",
+    "type": "concept",
+    "source": "wikipedia",
+    "wikipedia_title": "Photosynthesis"
+  },
+  {
+    "subject": "Biology",
+    "class_level": 11,
+    "topic": "Respiration in Plants",
+    "type": "concept",
+    "source": "wikipedia",
+    "wikipedia_title": "Cellular respiration"
+  },
+  {
+    "subject": "Biology",
+    "class_level": 11,
+    "topic": "Digestion and Absorption",
+    "type": "concept",
+    "source": "wikipedia",
+    "wikipedia_title": "Digestion"
+  },
+  {
+    "subject": "Biology",
+    "class_level": 11,
+    "topic": "Breathing and Exchange of Gases",
+    "type": "concept",
+    "source": "wikipedia",
+    "wikipedia_title": "Gas exchange"
+  },
+  {
+    "subject": "Biology",
+    "class_level": 11,
+    "topic": "Body Fluids and Circulation",
+    "type": "concept",
+    "source": "wikipedia",
+    "wikipedia_title": "Circulatory system"
+  },
+  {
+    "subject": "Biology",
+    "class_level": 11,
+    "topic": "Excretory Products and Elimination",
+    "type": "concept",
+    "source": "wikipedia",
+    "wikipedia_title": "Excretion"
+  },
+  {
+    "subject": "Biology",
+    "class_level": 11,
+    "topic": "Neural Control and Coordination",
+    "type": "concept",
+    "source": "wikipedia",
+    "wikipedia_title": "Nervous system"
+  },
+  {
+    "subject": "Biology",
+    "class_level": 12,
+    "topic": "Sexual Reproduction in Flowering Plants",
+    "type": "concept",
+    "source": "wikipedia",
+    "wikipedia_title": "Plant reproduction"
+  },
+  {
+    "subject": "Biology",
+    "class_level": 12,
+    "topic": "Human Reproduction",
+    "type": "concept",
+    "source": "wikipedia",
+    "wikipedia_title": "Human reproduction"
+  },
+  {
+    "subject": "Biology",
+    "class_level": 12,
+    "topic": "Reproductive Health",
+    "type": "concept",
+    "source": "wikipedia",
+    "wikipedia_title": "Reproductive health"
+  },
+  {
+    "subject": "Biology",
+    "class_level": 12,
+    "topic": "Principles of Inheritance and Variation",
+    "type": "concept",
+    "source": "wikipedia",
+    "wikipedia_title": "Mendelian inheritance"
+  },
+  {
+    "subject": "Biology",
+    "class_level": 12,
+    "topic": "Molecular Basis of Inheritance",
+    "type": "concept",
+    "source": "wikipedia",
+    "wikipedia_title": "Molecular genetics"
+  },
+  {
+    "subject": "Biology",
+    "class_level": 12,
+    "topic": "Evolution",
+    "type": "concept",
+    "source": "wikipedia",
+    "wikipedia_title": "Evolution"
+  },
+  {
+    "subject": "Biology",
+    "class_level": 12,
+    "topic": "Human Health and Disease",
+    "type": "concept",
+    "source": "wikipedia",
+    "wikipedia_title": "Disease"
+  },
+  {
+    "subject": "Biology",
+    "class_level": 12,
+    "topic": "Microbes in Human Welfare",
+    "type": "concept",
+    "source": "wikipedia",
+    "wikipedia_title": "Microorganism"
+  },
+  {
+    "subject": "Biology",
+    "class_level": 12,
+    "topic": "Biotechnology: Principles and Processes",
+    "type": "concept",
+    "source": "wikipedia",
+    "wikipedia_title": "Biotechnology"
+  },
+  {
+    "subject": "Biology",
+    "class_level": 12,
+    "topic": "Organisms and Populations",
+    "type": "concept",
+    "source": "wikipedia",
+    "wikipedia_title": "Population ecology"
+  },
+  {
+    "subject": "Biology",
+    "class_level": 12,
+    "topic": "Ecosystem",
+    "type": "concept",
+    "source": "wikipedia",
+    "wikipedia_title": "Ecosystem"
+  },
+  {
+    "subject": "Biology",
+    "class_level": 12,
+    "topic": "Biodiversity and Conservation",
+    "type": "concept",
+    "source": "wikipedia",
+    "wikipedia_title": "Biodiversity"
+  },
+  {
+    "subject": "English",
+    "class_level": 11,
+    "topic": "Parts of Speech",
+    "type": "concept",
+    "source": "wikipedia",
+    "wikipedia_title": "Part of speech"
+  },
+  {
+    "subject": "English",
+    "class_level": 11,
+    "topic": "Tenses",
+    "type": "concept",
+    "source": "wikipedia",
+    "wikipedia_title": "Grammatical tense"
+  },
+  {
+    "subject": "English",
+    "class_level": 11,
+    "topic": "Active and Passive Voice",
+    "type": "concept",
+    "source": "wikipedia",
+    "wikipedia_title": "Grammatical voice"
+  },
+  {
+    "subject": "English",
+    "class_level": 11,
+    "topic": "Direct and Indirect Speech",
+    "type": "concept",
+    "source": "wikipedia",
+    "wikipedia_title": "Indirect speech"
+  },
+  {
+    "subject": "English",
+    "class_level": 11,
+    "topic": "Figures of Speech",
+    "type": "concept",
+    "source": "wikipedia",
+    "wikipedia_title": "Figure of speech"
+  },
+  {
+    "subject": "English",
+    "class_level": 11,
+    "topic": "Letter Writing",
+    "type": "concept",
+    "source": "wikipedia",
+    "wikipedia_title": "Letter (message)"
+  },
+  {
+    "subject": "English",
+    "class_level": 12,
+    "topic": "English Grammar Essentials",
+    "type": "concept",
+    "source": "wikipedia",
+    "wikipedia_title": "English grammar"
+  },
+  {
+    "subject": "English",
+    "class_level": 12,
+    "topic": "Poetry Appreciation",
+    "type": "concept",
+    "source": "wikipedia",
+    "wikipedia_title": "Poetry"
+  },
+  {
+    "subject": "English",
+    "class_level": 12,
+    "topic": "Prose Comprehension",
+    "type": "concept",
+    "source": "wikipedia",
+    "wikipedia_title": "Prose"
+  },
+  {
+    "subject": "English",
+    "class_level": 12,
+    "topic": "Essay Writing",
+    "type": "concept",
+    "source": "wikipedia",
+    "wikipedia_title": "Essay"
+  },
+  {
+    "_comment": "This is a template, not a live job -- it's disabled so run_scraper.py skips it. Copy it, point 'url' at a real page of practice questions you have the right to scrape, fill in the CSS selectors for that page's markup, and remove _disabled. See generic_scraper.py's docstring for the full selector reference.",
+    "_disabled": true,
+    "subject": "Physics",
+    "class_level": 11,
+    "topic": "Laws of Motion",
+    "type": "practice_question",
+    "source": "generic_html",
+    "url": "https://example.com/class-11-physics/laws-of-motion-practice",
+    "source_name": "Example Site",
+    "license": "Check the site's terms before reuse",
+    "selectors": {
+      "item": "div.question",
+      "title": ".question-text",
+      "options": ".options li",
+      "answer": ".answer"
+    }
+  }
+]

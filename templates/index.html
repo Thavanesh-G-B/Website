@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block title %}Study Library{% endblock %}
+{% block content %}
+  <h1>Class 11 &amp; 12 Study Library</h1>
+  <p class="muted">Pick a subject and class to browse concepts and practice questions.</p>
+
+  {% if not subjects %}
+    <div class="empty-state">
+      <p>No content yet. Run <code>python seed.py</code> for sample data, or <code>python -m scraper.run_scraper</code> to pull real content.</p>
+    </div>
+  {% endif %}
+
+  <div class="subject-grid">
+    {% for subject in subjects %}
+      <div class="subject-card">
+        <h2>{{ subject.name }}</h2>
+        <div class="class-links">
+          {% for class_level in class_levels %}
+            <a class="class-link" href="{{ url_for('subject_view', slug=subject.slug, class_level=class_level) }}">
+              Class {{ class_level }}
+              <span class="count">{{ counts.get((subject.id, class_level), 0) }} items</span>
+            </a>
+          {% endfor %}
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+{% endblock %}
