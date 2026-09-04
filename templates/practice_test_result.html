@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block title %}Result — {{ attempt.subject.name }}{% endblock %}
+{% block content %}
+  <h1>Result: {{ attempt.subject.name }}{% if attempt.topic %} &middot; {{ attempt.topic.name }}{% endif %}</h1>
+
+  <div class="score-banner">
+    <span class="score-number">{{ attempt.score }}%</span>
+    <span class="muted">{{ attempt.correct_count }} of {{ attempt.total_count }} correct</span>
+  </div>
+
+  {% for row in rows %}
+    <article class="content-item practice_question{{ '' if row.is_correct else ' incorrect' }}">
+      <h3>{{ loop.index }}. {{ row.item.title }}</h3>
+      <span class="badge {{ 'correct-badge' if row.is_correct else 'incorrect-badge' }}">
+        {{ 'Correct' if row.is_correct else ('Skipped' if not row.selected else 'Incorrect') }}
+      </span>
+      <ol class="options" type="a">
+        {% for option in row.options %}
+          <li class="{{ 'option-correct' if option == row.correct else '' }}{{ ' option-your-pick' if option == row.selected and not row.is_correct else '' }}">
+            {{ option }}
+            {% if option == row.correct %}✓{% elif option == row.selected %}✗{% endif %}
+          </li>
+        {% endfor %}
+      </ol>
+    </article>
+  {% endfor %}
+
+  <p>
+    <a href="{{ url_for('practice_test_form') }}">Take another test</a> &middot;
+    <a href="{{ url_for('progress') }}">View progress</a>
+  </p>
+{% endblock %}

@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block title %}Sign up{% endblock %}
+{% block content %}
+  <div class="auth-card">
+    <h1>Create an account</h1>
+    <p class="muted">Free — lets you take mock tests and track progress. No card required.</p>
+    <form method="post">
+      <label>Email
+        <input type="email" name="email" required autofocus>
+      </label>
+      <label>Password
+        <input type="password" name="password" required minlength="8">
+      </label>
+      <button type="submit">Sign up</button>
+    </form>
+    <p class="muted">Already have an account? <a href="{{ url_for('login') }}">Log in</a></p>
+  </div>
+{% endblock %}

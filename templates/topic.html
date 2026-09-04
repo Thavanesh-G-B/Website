@@ -12,6 +12,16 @@
     <a class="{{ 'active' if not active_type }}" href="{{ url_for('topic_view', topic_id=topic.id) }}">All</a>
     <a class="{{ 'active' if active_type == 'concept' }}" href="{{ url_for('topic_view', topic_id=topic.id, type='concept') }}">Concepts</a>
     <a class="{{ 'active' if active_type == 'practice_question' }}" href="{{ url_for('topic_view', topic_id=topic.id, type='practice_question') }}">Practice Questions</a>
+    {% if current_user.is_authenticated %}
+      <form action="{{ url_for('practice_test_start') }}" method="post" class="inline-form quiz-cta">
+        <input type="hidden" name="subject_id" value="{{ topic.subject_id }}">
+        <input type="hidden" name="class_level" value="{{ topic.class_level }}">
+        <input type="hidden" name="topic_id" value="{{ topic.id }}">
+        <button type="submit" class="link-button-accent">Take a mock test on this topic →</button>
+      </form>
+    {% else %}
+      <a class="quiz-cta" href="{{ url_for('login', next=url_for('topic_view', topic_id=topic.id)) }}">Log in to take a mock test →</a>
+    {% endif %}
   </div>
 
   {% if not items %}
@@ -19,29 +29,34 @@
   {% endif %}
 
   {% for item in items %}
-    <article class="content-item {{ item.type }}" id="item-{{ item.id }}">
+    <article class="content-item {{ item.type }}{{ ' locked' if item.locked }}" id="item-{{ item.id }}">
       <h3>{{ item.title }}</h3>
       <span class="badge">{{ 'Concept' if item.type == 'concept' else 'Practice Question' }}</span>
-      <div class="body">{{ item.body }}</div>
+      {% if item.locked %}
+        <span class="badge premium-lock">🔒 Premium</span>
+        <p class="locked-teaser">This practice question is part of the premium bank. <a href="{{ url_for('upgrade') }}">Upgrade</a> to view it.</p>
+      {% else %}
+        <div class="body">{{ item.body }}</div>
 
-      {% if item.options_list %}
-        <ol class="options" type="a">
-          {% for option in item.options_list %}<li>{{ option }}</li>{% endfor %}
-        </ol>
-      {% endif %}
+        {% if item.options_list %}
+          <ol class="options" type="a">
+            {% for option in item.options_list %}<li>{{ option }}</li>{% endfor %}
+          </ol>
+        {% endif %}
 
-      {% if item.answer %}
-        <details class="answer">
-          <summary>Show answer</summary>
-          <p>{{ item.answer }}</p>
-        </details>
-      {% endif %}
+        {% if item.answer %}
+          <details class="answer">
+            <summary>Show answer</summary>
+            <p>{{ item.answer }}</p>
+          </details>
+        {% endif %}
 
-      {% if item.source_url %}
-        <p class="source">Source:
-          <a href="{{ item.source_url }}" target="_blank" rel="noopener noreferrer">{{ item.source_name or item.source_url }}</a>
-          {% if item.license %}&middot; {{ item.license }}{% endif %}
-        </p>
+        {% if item.source_url %}
+          <p class="source">Source:
+            <a href="{{ item.source_url }}" target="_blank" rel="noopener noreferrer">{{ item.source_name or item.source_url }}</a>
+            {% if item.license %}&middot; {{ item.license }}{% endif %}
+          </p>
+        {% endif %}
       {% endif %}
     </article>
   {% endfor %}

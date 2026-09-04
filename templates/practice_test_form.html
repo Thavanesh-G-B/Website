@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+{% block title %}Mock Test{% endblock %}
+{% block content %}
+  <h1>Start a mock test</h1>
+  <p class="muted">
+    Up to {{ mock_test_length }} auto-graded multiple-choice questions, scored instantly.
+    {% if not current_user.is_premium %}Free accounts draw from the free question pool only —
+    <a href="{{ url_for('upgrade') }}">Premium</a> unlocks the full bank per topic.{% endif %}
+  </p>
+
+  <form action="{{ url_for('practice_test_start') }}" method="post" class="test-form">
+    <label>Subject
+      <select name="subject_id" id="subject_id" required>
+        <option value="" disabled selected>Choose a subject</option>
+        {% for subject in subjects %}
+          <option value="{{ subject.id }}">{{ subject.name }}</option>
+        {% endfor %}
+      </select>
+    </label>
+
+    <label>Class
+      <select name="class_level" id="class_level" required>
+        <option value="" disabled selected>Choose a class</option>
+        {% for class_level in class_levels %}
+          <option value="{{ class_level }}">Class {{ class_level }}</option>
+        {% endfor %}
+      </select>
+    </label>
+
+    <label>Topic <span class="muted">(optional — leave blank to test the whole subject)</span>
+      <select name="topic_id" id="topic_id">
+        <option value="">Whole subject</option>
+      </select>
+    </label>
+
+    <button type="submit">Start test</button>
+  </form>
+
+  <script id="topics-data" type="application/json">{{ topics_json | tojson }}</script>
+  <script>
+    (function () {
+      var topics = JSON.parse(document.getElementById("topics-data").textContent);
+      var subjectSelect = document.getElementById("subject_id");
+      var classSelect = document.getElementById("class_level");
+      var topicSelect = document.getElementById("topic_id");
+
+      function refreshTopics() {
+        var subjectId = subjectSelect.value ? parseInt(subjectSelect.value, 10) : null;
+        var classLevel = classSelect.value ? parseInt(classSelect.value, 10) : null;
+        topicSelect.innerHTML = "";
+        var wholeOpt = document.createElement("option");
+        wholeOpt.value = "";
+        wholeOpt.textContent = "Whole subject";
+        topicSelect.appendChild(wholeOpt);
+
+        topics
+          .filter(function (t) {
+            return (!subjectId || t.subject_id === subjectId) && (!classLevel || t.class_level === classLevel);
+          })
+          .forEach(function (t) {
+            var opt = document.createElement("option");
+            opt.value = t.id;
+            opt.textContent = t.name;
+            topicSelect.appendChild(opt);
+          });
+      }
+
+      subjectSelect.addEventListener("change", refreshTopics);
+      classSelect.addEventListener("change", refreshTopics);
+      refreshTopics();
+    })();
+  </script>
+{% endblock %}

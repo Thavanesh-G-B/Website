@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block title %}Upgrade{% endblock %}
+{% block content %}
+  <h1>Study Library Premium</h1>
+  <p class="muted">Everything stays ad-free either way. Premium unlocks more depth, not fewer distractions.</p>
+
+  <div class="plan-grid">
+    <div class="plan-card">
+      <h2>Free</h2>
+      <ul>
+        <li>All concept explanations, every subject</li>
+        <li>A baseline set of practice questions per topic</li>
+        <li>Full-text search</li>
+        <li>No ads, ever</li>
+      </ul>
+    </div>
+    <div class="plan-card featured">
+      <h2>Premium</h2>
+      <ul>
+        <li>Everything in Free</li>
+        <li>Full practice-question bank per topic</li>
+        <li>Longer, more varied mock tests</li>
+        <li>Progress dashboard &amp; weak-topic tracking</li>
+      </ul>
+
+      {% if not current_user.is_authenticated %}
+        <p><a href="{{ url_for('login', next=url_for('upgrade')) }}">Log in</a> to upgrade.</p>
+      {% elif current_user.is_premium %}
+        <p class="premium-active">✓ You're on Premium.</p>
+        <form action="{{ url_for('upgrade_cancel') }}" method="post">
+          <button type="submit" class="secondary">Turn off (dev mode)</button>
+        </form>
+      {% else %}
+        <form action="{{ url_for('upgrade_activate') }}" method="post">
+          <button type="submit">Activate Premium (dev mode)</button>
+        </form>
+        <p class="muted small">
+          No payment gateway is connected in this build — this button just
+          flips the flag a real checkout would flip, so you can try the
+          premium experience. See the comment on <code>/upgrade/activate</code>
+          in app.py for what wiring in real billing (Stripe/Razorpay/etc.)
+          looks like.
+        </p>
+      {% endif %}
+    </div>
+  </div>
+{% endblock %}

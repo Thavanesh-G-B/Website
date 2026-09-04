@@ -25,3 +25,12 @@ class Config:
 SUBJECTS = ["Math", "Physics", "Chemistry", "Biology", "English"]
 CLASS_LEVELS = [11, 12]
 CONTENT_TYPES = ["concept", "practice_question"]
+
+# --- Freemium / mock-test settings -----------------------------------------
+# Concepts are always free (they're Wikipedia-sourced, so charging for them
+# makes no sense). Practice questions can be individually flagged
+# is_premium=True; free accounts simply never see those in browsing or in
+# mock tests. See models.User.is_premium and quiz.py.
+MOCK_TEST_LENGTH = 10  # questions per generated mock test (capped by pool size)
+MOCK_TEST_MIN_QUESTIONS = 2  # below this, refuse to start a test -- not enough content yet
+WEAK_TOPIC_ACCURACY_THRESHOLD = 0.6  # topics below this average score are flagged on /progress

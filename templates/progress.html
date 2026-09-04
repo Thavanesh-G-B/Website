@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block title %}Progress{% endblock %}
+{% block content %}
+  <h1>Your progress</h1>
+
+  {% if not attempts %}
+    <div class="empty-state">
+      <p>No completed mock tests yet. <a href="{{ url_for('practice_test_form') }}">Take your first one</a>.</p>
+    </div>
+  {% else %}
+    <h2>By subject</h2>
+    <div class="subject-grid">
+      {% for s in subject_stats %}
+        <div class="subject-card">
+          <h2>{{ s.subject.name }}</h2>
+          <p class="score-number small">{{ s.average }}%</p>
+          <p class="muted">average across {{ s.count }} test(s)</p>
+        </div>
+      {% endfor %}
+    </div>
+
+    {% if weak_topics %}
+      <h2>Weak topics <span class="muted">(below {{ (weak_threshold * 100) | round | int }}% average)</span></h2>
+      <ul class="topic-list">
+        {% for row in weak_topics %}
+          <li>
+            <a href="{{ url_for('topic_view', topic_id=row.topic.id) }}">
+              {{ row.topic.subject.name }} &middot; Class {{ row.topic.class_level }} &middot; {{ row.topic.name }}
+            </a>
+            <span class="count">{{ row.average_score }}% avg over {{ row.attempts }} test(s)</span>
+          </li>
+        {% endfor %}
+      </ul>
+    {% endif %}
+
+    <h2>Test history</h2>
+    <ul class="topic-list">
+      {% for attempt in attempts %}
+        <li>
+          <a href="{{ url_for('practice_test_result', attempt_id=attempt.id) }}">
+            {{ attempt.subject.name }}{% if attempt.topic %} &middot; {{ attempt.topic.name }}{% endif %}
+            &middot; Class {{ attempt.class_level }}
+          </a>
+          <span class="count">{{ attempt.score }}% &middot; {{ attempt.finished_at.strftime('%d %b %Y') }}</span>
+        </li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+{% endblock %}

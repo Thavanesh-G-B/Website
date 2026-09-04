@@ -8,11 +8,15 @@
   {% endif %}
 
   {% for item in results %}
-    <article class="content-item {{ item.type }} search-result">
+    <article class="content-item {{ item.type }}{{ ' locked' if item.locked }} search-result">
       <p class="crumb">{{ item.topic.subject.name }} &middot; Class {{ item.topic.class_level }} &middot; {{ item.topic.name }}</p>
       <h3><a href="{{ url_for('topic_view', topic_id=item.topic_id) }}#item-{{ item.id }}">{{ item.title }}</a></h3>
       <span class="badge">{{ 'Concept' if item.type == 'concept' else 'Practice Question' }}</span>
-      <p class="body snippet">{{ item.body[:280] }}{% if item.body|length > 280 %}...{% endif %}</p>
+      {% if item.locked %}
+        <span class="badge premium-lock">🔒 Premium</span>
+      {% else %}
+        <p class="body snippet">{{ item.body[:280] }}{% if item.body|length > 280 %}...{% endif %}</p>
+      {% endif %}
     </article>
   {% endfor %}
 

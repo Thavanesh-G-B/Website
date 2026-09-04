@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %}Mock Test — {{ attempt.subject.name }}{% endblock %}
+{% block content %}
+  <h1>{{ attempt.subject.name }}{% if attempt.topic %} &middot; {{ attempt.topic.name }}{% endif %} &middot; Class {{ attempt.class_level }}</h1>
+  <p class="muted">{{ items|length }} question(s). Answer what you can, then submit.</p>
+
+  <form method="post" class="test-form">
+    {% for item in items %}
+      <fieldset class="test-question">
+        <legend>{{ loop.index }}. {{ item.title }}</legend>
+        {% for option in item.options_list %}
+          <label class="option-label">
+            <input type="radio" name="question-{{ item.id }}" value="{{ option }}">
+            {{ option }}
+          </label>
+        {% endfor %}
+      </fieldset>
+    {% endfor %}
+
+    <button type="submit">Submit test</button>
+  </form>
+{% endblock %}

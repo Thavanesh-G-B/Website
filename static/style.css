@@ -8,6 +8,12 @@
   --accent-soft: #eef2ff;
   --concept: #059669;
   --practice: #d97706;
+  --premium: #b45309;
+  --premium-soft: #fffbeb;
+  --success: #059669;
+  --success-soft: #ecfdf5;
+  --danger: #dc2626;
+  --danger-soft: #fef2f2;
 }
 
 * { box-sizing: border-box; }
@@ -193,3 +199,101 @@ h1 { margin-top: 4px; }
 }
 
 code { background: #eef0f3; padding: 1px 5px; border-radius: 4px; }
+
+/* ---------------- account nav / auth / flash ---------------- */
+
+.account-nav { display: flex; align-items: center; gap: 14px; font-size: 0.9rem; }
+.account-nav a { color: var(--text); text-decoration: none; }
+.account-nav a:hover { color: var(--accent); }
+.account-nav .cta {
+  background: var(--accent); color: white; padding: 6px 14px; border-radius: 6px;
+}
+.account-nav .premium-badge { color: var(--premium); font-weight: 600; }
+
+.inline-form { display: inline; margin: 0; }
+.link-button {
+  background: none; border: none; padding: 0; color: var(--text); cursor: pointer;
+  font: inherit; text-decoration: none;
+}
+.link-button:hover { color: var(--accent); }
+.link-button-accent {
+  background: none; border: none; padding: 0; color: var(--accent); cursor: pointer;
+  font: inherit; font-weight: 500;
+}
+
+.flash-messages { max-width: 880px; margin: 12px auto 0; padding: 0 20px; }
+.flash {
+  background: var(--accent-soft); color: var(--accent); border-radius: 6px;
+  padding: 10px 14px; margin: 0 0 8px; font-size: 0.9rem;
+}
+
+.auth-card {
+  max-width: 360px; margin: 40px auto; background: var(--panel);
+  border: 1px solid var(--border); border-radius: 10px; padding: 28px;
+}
+.auth-card form { display: flex; flex-direction: column; gap: 14px; margin: 18px 0; }
+.auth-card label { display: flex; flex-direction: column; gap: 6px; font-size: 0.9rem; font-weight: 500; }
+.auth-card input {
+  padding: 9px 10px; border: 1px solid var(--border); border-radius: 6px; font: inherit;
+}
+.auth-card button, .test-form > button, .plan-card button {
+  padding: 10px 16px; border: none; border-radius: 6px; background: var(--accent);
+  color: white; font-weight: 500; cursor: pointer; font-size: 0.95rem;
+}
+.plan-card button.secondary { background: transparent; color: var(--muted); border: 1px solid var(--border); }
+
+/* ---------------- upgrade / plans ---------------- */
+
+.plan-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 16px; margin-top: 20px; align-items: start;
+}
+.plan-card {
+  background: var(--panel); border: 1px solid var(--border); border-radius: 10px; padding: 22px;
+}
+.plan-card.featured { border-color: var(--premium); box-shadow: 0 0 0 1px var(--premium); }
+.plan-card ul { padding-left: 20px; margin: 14px 0; }
+.plan-card li { margin-bottom: 6px; }
+.premium-active { color: var(--success); font-weight: 600; }
+.small { font-size: 0.8rem; }
+
+/* ---------------- premium-locked content ---------------- */
+
+.content-item.locked { border-left-color: var(--premium); background: var(--premium-soft); }
+.badge.premium-lock { background: var(--premium-soft); color: var(--premium); margin-left: 6px; }
+.locked-teaser { color: var(--muted); font-size: 0.9rem; }
+
+.type-filter { flex-wrap: wrap; row-gap: 8px; }
+.quiz-cta { margin-left: auto; font-size: 0.9rem; }
+
+/* ---------------- mock test form / taking / results ---------------- */
+
+.test-form { display: flex; flex-direction: column; gap: 18px; max-width: 640px; }
+.test-form label { display: flex; flex-direction: column; gap: 6px; font-weight: 500; }
+.test-form select {
+  padding: 9px 10px; border: 1px solid var(--border); border-radius: 6px; font: inherit; background: white;
+}
+.test-form > button { align-self: flex-start; }
+
+.test-question {
+  border: 1px solid var(--border); border-radius: 8px; padding: 14px 16px; background: var(--panel);
+}
+.test-question legend { font-weight: 600; padding: 0 4px; }
+.option-label {
+  display: block; padding: 8px 6px; border-radius: 6px; cursor: pointer; font-weight: 400;
+}
+.option-label:hover { background: var(--accent-soft); }
+
+.score-banner {
+  display: flex; align-items: baseline; gap: 12px; background: var(--panel);
+  border: 1px solid var(--border); border-radius: 10px; padding: 18px 22px; margin-bottom: 20px;
+}
+.score-number { font-size: 2.2rem; font-weight: 700; color: var(--accent); }
+.score-number.small { font-size: 1.6rem; }
+
+.badge.correct-badge { background: var(--success-soft); color: var(--success); }
+.badge.incorrect-badge { background: var(--danger-soft); color: var(--danger); }
+.content-item.incorrect { border-left-color: var(--danger); }
+
+.options li.option-correct { color: var(--success); font-weight: 600; }
+.options li.option-your-pick { color: var(--danger); font-weight: 600; }

@@ -7,6 +7,8 @@ Run:
     python seed.py
 """
 
+import json
+
 from app import create_app
 from models import ContentItem, Subject, Topic, db
 from slugify_util import slugify
@@ -151,6 +153,149 @@ SAMPLE_DATA = [
     ),
 ]
 
+# A second free MCQ per topic above, so the free question pool per topic is
+# 2 (SAMPLE_DATA's + this one) -- combined with the 1 premium question below
+# that's enough content for a premium mock test (>= MOCK_TEST_MIN_QUESTIONS)
+# right out of seed.py, without needing the scraper to add more first.
+# (subject, class_level, topic, question_title, options, answer)
+EXTRA_FREE_QUESTIONS = [
+    (
+        "Math", 11, "Quadratic Equations",
+        "What are the roots of x² - 9 = 0?",
+        ["x = 3, -3", "x = 9, -9", "x = 3 only", "No real roots"],
+        "x = 3, -3 (difference of squares: (x-3)(x+3) = 0)",
+    ),
+    (
+        "Math", 12, "Applications of Derivatives",
+        "What is the derivative of f(x) = x²?",
+        ["x", "2x", "x²", "2"],
+        "2x (power rule: d/dx xⁿ = nxⁿ⁻¹)",
+    ),
+    (
+        "Physics", 11, "Laws of Motion",
+        "What is the SI unit of momentum?",
+        ["kg·m/s", "kg·m/s²", "Joule", "Watt"],
+        "kg·m/s (momentum = mass × velocity)",
+    ),
+    (
+        "Physics", 12, "Current Electricity",
+        "What is the power dissipated in a 10 Ω resistor carrying 2 A?",
+        ["20 W", "40 W", "5 W", "200 W"],
+        "40 W (P = I²R = 2² × 10)",
+    ),
+    (
+        "Chemistry", 11, "Some Basic Concepts of Chemistry",
+        "Which law states that matter can neither be created nor destroyed in a chemical reaction?",
+        ["Law of conservation of mass", "Law of definite proportions", "Avogadro's law", "Law of multiple proportions"],
+        "Law of conservation of mass (total mass of reactants equals total mass of products)",
+    ),
+    (
+        "Chemistry", 12, "Electrochemistry",
+        "What is the SI unit of electrode potential?",
+        ["Volt", "Ampere", "Ohm", "Coulomb"],
+        "Volt (electrode potential is measured in volts)",
+    ),
+    (
+        "Biology", 11, "Cell: The Unit of Life",
+        "What structure regulates the entry and exit of substances in a cell?",
+        ["Cell wall", "Plasma membrane", "Nucleus", "Cytoplasm"],
+        "Plasma membrane (it selectively controls what enters and leaves the cell)",
+    ),
+    (
+        "Biology", 12, "Principles of Inheritance and Variation",
+        "What term describes the observable physical characteristics resulting from a genotype?",
+        ["Genotype", "Phenotype", "Allele", "Locus"],
+        "Phenotype (the observable expression of the genotype)",
+    ),
+    (
+        "English", 11, "Parts of Speech",
+        "In 'She sings beautifully', which word is the verb?",
+        ["She", "Sings", "Beautifully", "None of these"],
+        "Sings (it expresses the action)",
+    ),
+    (
+        "English", 12, "English Grammar Essentials",
+        "What tense is used in 'She has finished her homework'?",
+        ["Simple past", "Present perfect", "Past perfect", "Simple present"],
+        "Present perfect (has/have + past participle)",
+    ),
+]
+
+# One extra, harder MCQ per topic above, gated behind is_premium -- this is
+# what /upgrade actually sells: a deeper practice-question bank, not the
+# (freely available anyway) concept explanations. Each answer is written as
+# "<exact option text>(optional explanation)" so quiz.correct_option() can
+# auto-grade it -- see that module's docstring.
+# (subject, class_level, topic, question_title, options, answer)
+PREMIUM_QUESTIONS = [
+    (
+        "Math", 11, "Quadratic Equations",
+        "For ax² + bx + c = 0, if the discriminant D = 0, what can you say about the roots?",
+        ["Two distinct real roots", "One repeated real root", "Two complex roots", "Cannot be determined"],
+        "One repeated real root (D = 0 gives a repeated real root)",
+    ),
+    (
+        "Math", 12, "Applications of Derivatives",
+        "What does a positive second derivative at a critical point indicate?",
+        ["Local maximum", "Local minimum", "Point of inflection", "Undefined"],
+        "Local minimum (f''(x) > 0 indicates a local minimum)",
+    ),
+    (
+        "Physics", 11, "Laws of Motion",
+        "Which of Newton's laws best explains how a rocket propels itself forward?",
+        ["First law", "Second law", "Third law", "Law of gravitation"],
+        "Third law (the expelled exhaust gas exerts an equal and opposite reaction force on the rocket)",
+    ),
+    (
+        "Physics", 12, "Current Electricity",
+        "Two resistors of 4 Ω and 6 Ω are connected in parallel. What is the equivalent resistance?",
+        ["10 Ω", "2.4 Ω", "1.5 Ω", "24 Ω"],
+        "2.4 Ω (1/R = 1/4 + 1/6 = 5/12, so R = 12/5 = 2.4 Ω)",
+    ),
+    (
+        "Chemistry", 11, "Some Basic Concepts of Chemistry",
+        "What is the molar mass of water (H₂O), in g/mol?",
+        ["16", "18", "20", "22"],
+        "18 (2×1 for hydrogen + 16 for oxygen = 18)",
+    ),
+    (
+        "Chemistry", 12, "Electrochemistry",
+        "In an electrochemical cell, oxidation always occurs at which electrode?",
+        ["Cathode", "Anode", "Both electrodes", "Neither electrode"],
+        "Anode (oxidation always occurs at the anode, by definition)",
+    ),
+    (
+        "Biology", 11, "Cell: The Unit of Life",
+        "Which organelle is sometimes called the 'suicide bag' of the cell?",
+        ["Ribosome", "Lysosome", "Golgi apparatus", "Mitochondrion"],
+        "Lysosome (its digestive enzymes can break down the cell itself if released)",
+    ),
+    (
+        "Biology", 12, "Principles of Inheritance and Variation",
+        "A dihybrid cross between two heterozygous parents (RrYy × RrYy) gives what "
+        "phenotypic ratio in the F2 generation, assuming independent assortment?",
+        ["3:1", "1:2:1", "9:3:3:1", "1:1:1:1"],
+        "9:3:3:1 (the classic dihybrid ratio under independent assortment)",
+    ),
+    (
+        "English", 11, "Parts of Speech",
+        "In the sentence 'The bright red car sped past', which word is functioning as an adjective?",
+        ["Sped", "Bright", "Past", "Car"],
+        "Bright (it describes the noun 'car', along with 'red')",
+    ),
+    (
+        "English", 12, "English Grammar Essentials",
+        "Which sentence is correctly written in the passive voice?",
+        [
+            "The dog chased the cat.",
+            "The cat was chased by the dog.",
+            "The cat chases the dog.",
+            "Chasing the cat, the dog ran.",
+        ],
+        "The cat was chased by the dog. (the subject 'the cat' receives the action)",
+    ),
+]
+
 
 def main():
     app = create_app()
@@ -184,18 +329,49 @@ def main():
                 db.session.add(ContentItem(topic_id=topic.id, **kwargs))
                 added += 1
 
-            import json as _json
-
             add_item(
                 type="concept", title=c_title, body=c_body,
                 source_name="Study Library (sample)", license="Original content",
             )
             add_item(
                 type="practice_question", title=q_title, body=q_title,
-                options=_json.dumps(q_options) if q_options else None,
+                options=json.dumps(q_options) if q_options else None,
                 answer=q_answer, difficulty="medium",
                 source_name="Study Library (sample)", license="Original content",
             )
+
+        def add_extra_question(rows, *, is_premium, difficulty, source_name):
+            nonlocal added
+            for (subject_name, class_level, topic_name, q_title, q_options, q_answer) in rows:
+                subject = Subject.query.filter_by(name=subject_name).first()
+                topic = Topic.query.filter_by(
+                    subject_id=subject.id, class_level=class_level, slug=slugify(topic_name)
+                ).first()
+                if topic is None:
+                    continue  # topic wasn't in SAMPLE_DATA above -- nothing to attach this to
+
+                exists = ContentItem.query.filter_by(
+                    topic_id=topic.id, type="practice_question", title=q_title
+                ).first()
+                if exists:
+                    continue
+                db.session.add(
+                    ContentItem(
+                        topic_id=topic.id, type="practice_question", title=q_title, body=q_title,
+                        options=json.dumps(q_options), answer=q_answer, difficulty=difficulty,
+                        is_premium=is_premium, source_name=source_name, license="Original content",
+                    )
+                )
+                added += 1
+
+        add_extra_question(
+            EXTRA_FREE_QUESTIONS, is_premium=False, difficulty="medium",
+            source_name="Study Library (sample)",
+        )
+        add_extra_question(
+            PREMIUM_QUESTIONS, is_premium=True, difficulty="hard",
+            source_name="Study Library (sample, premium)",
+        )
 
         db.session.commit()
         print(f"Seeded {added} sample content item(s). Run `python app.py` and visit http://127.0.0.1:5000")

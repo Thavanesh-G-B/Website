@@ -2,13 +2,19 @@
 
 A local website + scraper for collecting Class 11 & 12 study material —
 **concepts** and **practice questions** — across Math, Physics, Chemistry,
-Biology and English, and browsing it from a simple local site.
+Biology and English, browsable from a simple local site with accounts, a
+free/premium practice-question tier, auto-graded mock tests, and a progress
+dashboard. No ads anywhere, on either tier.
 
 - **Website**: Flask app, browse by Subject → Class (11/12) → Topic, plus
   full-text search. Runs at `http://127.0.0.1:5000`.
 - **Database**: SQLite file at `data/app.db` — no server to install.
 - **Scraper**: a small, extensible pipeline that fetches content and stores
   it with full provenance (source name, URL, license) on every item.
+- **Accounts**: email/password via Flask-Login. Free accounts can browse
+  everything and take mock tests from the free question pool; premium
+  accounts get the full practice-question bank per topic. See
+  [Monetization](#monetization--premium) below.
 
 ## Quick start
 
@@ -16,9 +22,12 @@ Biology and English, and browsing it from a simple local site.
 python3 -m venv .venv && source .venv/bin/activate   # optional but recommended
 pip install -r requirements.txt
 
-python seed.py           # adds ~20 hand-written sample items so the site isn't empty
+python seed.py           # adds ~30 hand-written sample items (some free, some premium)
 python app.py             # starts the site at http://127.0.0.1:5000
 ```
+
+Sign up at `/register`, then `/practice-test` to take a mock test or
+`/upgrade` to try the premium tier (see below — no real payment is taken).
 
 Then, to pull in real content:
 
@@ -32,10 +41,11 @@ Re-run `python app.py` (or just refresh the page — SQLite is read live).
 ## Project structure
 
 ```
-app.py                  Flask app: routes for browsing + search
-models.py                SQLAlchemy models: Subject, Topic, ContentItem
-config.py                 subjects/classes list, DB path
-seed.py                    original sample content (not scraped)
+app.py                  Flask app: browsing, auth, upgrade, mock tests, progress
+quiz.py                  mock-test building/grading logic (used by app.py)
+models.py                SQLAlchemy models: Subject, Topic, ContentItem, User, Attempt
+config.py                 subjects/classes list, DB path, mock-test/freemium constants
+seed.py                    original sample content (not scraped) -- free + premium
 slugify_util.py             tiny URL-slug helper
 
 scraper/
@@ -51,7 +61,8 @@ scraper/
   run_scraper.py            CLI entry point
 
 templates/, static/       Jinja templates + CSS for the site
-tests/test_scraper.py     unit tests for the parsing logic (offline, uses fixtures)
+tests/test_scraper.py     unit tests for scraper parsing logic (offline, uses fixtures)
+tests/test_quiz.py        unit tests for mock-test grading logic (offline, in-memory DB)
 ```
 
 ## How content is organized
@@ -140,15 +151,46 @@ If a site's structure needs real logic beyond CSS selectors, add a
 `scrape_xxx(job) -> list[ScrapedItem]` function in a new module (see
 `wikipedia_scraper.py` for the shape) and register it in `scraper/registry.py`.
 
+## Monetization / premium
+
+Concepts are always free for everyone — they're Wikipedia-sourced (CC BY-SA),
+so charging for them makes no sense and there'd be nothing stopping anyone
+from reading the same text on Wikipedia directly. What's actually gated is a
+**subset of practice questions** per topic (`ContentItem.is_premium`), plus
+premium accounts get a bigger question pool per mock test. No ads on either
+tier — premium buys more depth, not fewer distractions.
+
+- **Free account** (`/register`): browse everything, take mock tests from
+  the free question pool, track progress.
+- **Premium** (`/upgrade`): unlocks the full practice-question bank per
+  topic and larger mock tests.
+- **Mock tests** (`/practice-test`): pick a subject + class (optionally one
+  topic), get up to `MOCK_TEST_LENGTH` (config.py) auto-graded multiple-choice
+  questions, submit, get scored instantly.
+- **Progress** (`/progress`): test history, per-subject average score, and
+  topics flagged "weak" (below `WEAK_TOPIC_ACCURACY_THRESHOLD`).
+
+**No real payment gateway is wired in.** `/upgrade`'s "Activate Premium"
+button is a dev-mode stand-in that just flips `User.is_premium` — there's no
+Stripe/Razorpay/etc. behind it. See the comment on `upgrade_activate()` in
+`app.py` for exactly what a real launch needs: a Checkout Session route, and
+`is_premium=True` set only from that provider's payment-confirmed webhook,
+never from a client POST like the dev button.
+
+Auto-grading only works for multiple-choice items where `answer` is written
+as `"<exact option text>(optional explanation)"` — see `quiz.py`'s
+docstring and `correct_option()`. Free-response practice questions (no
+`options`) are browsable on the topic page but excluded from mock tests.
+
 ## Tests
 
 ```bash
 python -m unittest discover -s tests -v
 ```
 
-These run entirely offline against saved fixtures in `scraper/fixtures/` —
-no live network needed, so they work the same in CI/sandboxes as on your
-machine.
+These run entirely offline -- `test_scraper.py` uses saved fixtures in
+`scraper/fixtures/`, `test_quiz.py` uses an in-memory SQLite DB -- so they
+work the same in CI/sandboxes as on your machine, no live network needed.
 
 ## Notes
 
@@ -160,3 +202,7 @@ machine.
   an issue.
 - The Flask dev server (`python app.py`) is fine for local/personal use.
   Don't expose it to the internet as-is.
+- Before any real deployment: set a real `SECRET_KEY` env var (session
+  cookies are signed with it -- the `config.py` default is a dev placeholder),
+  serve over HTTPS, and wire in a real payment provider before trusting
+  `is_premium` for anything that matters (see Monetization above).
