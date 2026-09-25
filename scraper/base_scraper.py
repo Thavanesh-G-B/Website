@@ -142,11 +142,15 @@ def fetch_binary(
     delay: float = DEFAULT_DELAY_SECONDS,
     respect_robots: bool = True,
     skip_if_exists: bool = True,
+    headers: dict | None = None,
 ) -> bool:
     """Downloads a binary file (PDF, etc.) to dest_path, honoring robots.txt
     and rate limiting like fetch() does. Unlike fetch(), this doesn't use the
     text cache in cache/ -- the downloaded file at dest_path *is* the cache;
     skip_if_exists (default True) skips re-downloading if it's already there.
+
+    headers overrides the default request headers (see fetch()'s use of this
+    for why a caller might want to, e.g. sites that block non-browser UAs).
 
     Returns True if a file was downloaded, False if skipped (already exists).
     Raises RobotsDisallowed / ScrapeError like fetch() does.
@@ -160,6 +164,8 @@ def fetch_binary(
     _throttle(url, delay)
 
     req_headers = {"User-Agent": USER_AGENT, "Accept": "application/pdf,*/*"}
+    if headers:
+        req_headers.update(headers)
     try:
         resp = requests.get(url, headers=req_headers, timeout=REQUEST_TIMEOUT, stream=True)
         resp.raise_for_status()

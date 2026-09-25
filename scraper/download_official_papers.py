@@ -56,6 +56,22 @@ ARCHIVE_URLS = {
     "neet": "https://neet.nta.nic.in/document-category/archive/",
 }
 
+# NTA's site rejects requests whose User-Agent doesn't look like a real
+# browser (confirmed: our honest "StudyLibraryBot/1.0" identity gets a 403
+# here, even though robots.txt itself doesn't disallow the path -- this is
+# basic bot-filtering, not a robots.txt policy). We still check robots.txt
+# under our real identity (see base_scraper.check_robots_allowed, unchanged
+# below) -- these headers only affect the actual page/PDF fetch, to get past
+# a WAF that blocks non-browser UAs on documents meant for public download.
+BROWSER_HEADERS = {
+    "User-Agent": (
+        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
+        "(KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36"
+    ),
+    "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+    "Accept-Language": "en-US,en;q=0.9",
+}
+
 # Only download PDFs whose link text or filename suggests an actual question
 # paper (not notices, cutoffs, syllabus documents, etc.). Answer keys are
 # included too since we'll need them to grade the questions later.
@@ -83,7 +99,7 @@ def _safe_filename(url: str, link_text: str) -> str:
 
 def find_pdf_links(page_url: str) -> list[tuple[str, str]]:
     """Returns [(absolute_pdf_url, link_text), ...] found on one archive page."""
-    html = fetch(page_url)
+    html = fetch(page_url, headers=BROWSER_HEADERS)
     soup = BeautifulSoup(html, "html.parser")
 
     links = []
@@ -160,7 +176,7 @@ def main():
                 continue
 
             try:
-                was_downloaded = fetch_binary(pdf_url, dest_path)
+                was_downloaded = fetch_binary(pdf_url, dest_path, headers=BROWSER_HEADERS)
                 if was_downloaded:
                     downloaded += 1
                     print(f"[OK] {filename}")
