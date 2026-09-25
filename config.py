@@ -26,6 +26,18 @@ SUBJECTS = ["Math", "Physics", "Chemistry", "Biology", "English"]
 CLASS_LEVELS = [11, 12]
 CONTENT_TYPES = ["concept", "practice_question"]
 
+# Purely cosmetic -- gives each subject a visual identity on the homepage
+# and subject page. Falls back to a generic icon for any subject not listed
+# here (e.g. one added later without updating this dict).
+SUBJECT_ICONS = {
+    "Math": "📐",
+    "Physics": "⚛️",
+    "Chemistry": "🧪",
+    "Biology": "🧬",
+    "English": "📖",
+}
+DEFAULT_SUBJECT_ICON = "📘"
+
 # --- Freemium / mock-test settings -----------------------------------------
 # Concepts are always free (they're Wikipedia-sourced, so charging for them
 # makes no sense). Practice questions can be individually flagged

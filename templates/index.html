@@ -3,6 +3,7 @@
 {% block content %}
   <h1>Class 11 &amp; 12 Study Library</h1>
   <p class="muted">Pick a subject and class to browse concepts and practice questions.</p>
+  <p class="stat-row">{{ subjects|length }} subject{{ 's' if subjects|length != 1 }} &middot; Class 11 &amp; 12 &middot; 100% ad-free</p>
 
   {% if not subjects %}
     <div class="empty-state">
@@ -13,7 +14,7 @@
   <div class="subject-grid">
     {% for subject in subjects %}
       <div class="subject-card">
-        <h2>{{ subject.name }}</h2>
+        <h2><span class="subject-icon">{{ subject_icon(subject.name) }}</span>{{ subject.name }}</h2>
         <div class="class-links">
           {% for class_level in class_levels %}
             <a class="class-link" href="{{ url_for('subject_view', slug=subject.slug, class_level=class_level) }}">

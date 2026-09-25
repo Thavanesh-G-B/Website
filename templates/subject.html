@@ -2,7 +2,7 @@
 {% block title %}{{ subject.name }} - Class {{ class_level }}{% endblock %}
 {% block content %}
   <nav class="breadcrumb"><a href="{{ url_for('index') }}">Home</a> / {{ subject.name }} / Class {{ class_level }}</nav>
-  <h1>{{ subject.name }} &middot; Class {{ class_level }}</h1>
+  <h1><span class="subject-icon">{{ subject_icon(subject.name) }}</span>{{ subject.name }} &middot; Class {{ class_level }}</h1>
 
   {% if not topics %}
     <div class="empty-state">

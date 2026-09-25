@@ -33,8 +33,10 @@ import quiz
 from config import (
     CLASS_LEVELS,
     Config,
+    DEFAULT_SUBJECT_ICON,
     MOCK_TEST_LENGTH,
     MOCK_TEST_MIN_QUESTIONS,
+    SUBJECT_ICONS,
     SUBJECTS,
     WEAK_TOPIC_ACCURACY_THRESHOLD,
 )
@@ -335,7 +337,12 @@ def create_app(test_config: dict | None = None):
 
     @app.context_processor
     def inject_globals():
-        return {"all_subjects": SUBJECTS, "class_levels": CLASS_LEVELS, "mock_test_length": MOCK_TEST_LENGTH}
+        return {
+            "all_subjects": SUBJECTS,
+            "class_levels": CLASS_LEVELS,
+            "mock_test_length": MOCK_TEST_LENGTH,
+            "subject_icon": lambda name: SUBJECT_ICONS.get(name, DEFAULT_SUBJECT_ICON),
+        }
 
     return app
 
