@@ -89,7 +89,7 @@ def scrape_generic_html(job: dict) -> list[ScrapedItem]:
     license_ = job.get("license")
 
     html = fetch(url)
-    soup = BeautifulSoup(html, "lxml")
+    soup = BeautifulSoup(html, "html.parser")
 
     item_sel = selectors.get("item")
     if item_sel:

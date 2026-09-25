@@ -84,7 +84,7 @@ def _safe_filename(url: str, link_text: str) -> str:
 def find_pdf_links(page_url: str) -> list[tuple[str, str]]:
     """Returns [(absolute_pdf_url, link_text), ...] found on one archive page."""
     html = fetch(page_url)
-    soup = BeautifulSoup(html, "lxml")
+    soup = BeautifulSoup(html, "html.parser")
 
     links = []
     for a in soup.find_all("a", href=True):
