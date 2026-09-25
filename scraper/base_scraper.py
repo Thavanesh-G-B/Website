@@ -135,6 +135,46 @@ def fetch_json(url: str, **kwargs) -> dict:
     return json.loads(text)
 
 
+def fetch_binary(
+    url: str,
+    dest_path: str,
+    *,
+    delay: float = DEFAULT_DELAY_SECONDS,
+    respect_robots: bool = True,
+    skip_if_exists: bool = True,
+) -> bool:
+    """Downloads a binary file (PDF, etc.) to dest_path, honoring robots.txt
+    and rate limiting like fetch() does. Unlike fetch(), this doesn't use the
+    text cache in cache/ -- the downloaded file at dest_path *is* the cache;
+    skip_if_exists (default True) skips re-downloading if it's already there.
+
+    Returns True if a file was downloaded, False if skipped (already exists).
+    Raises RobotsDisallowed / ScrapeError like fetch() does.
+    """
+    if skip_if_exists and os.path.exists(dest_path):
+        return False
+
+    if respect_robots and not check_robots_allowed(url):
+        raise RobotsDisallowed(f"robots.txt disallows fetching {url}")
+
+    _throttle(url, delay)
+
+    req_headers = {"User-Agent": USER_AGENT, "Accept": "application/pdf,*/*"}
+    try:
+        resp = requests.get(url, headers=req_headers, timeout=REQUEST_TIMEOUT, stream=True)
+        resp.raise_for_status()
+    except requests.RequestException as exc:
+        raise ScrapeError(f"failed to fetch {url}: {exc}") from exc
+
+    os.makedirs(os.path.dirname(dest_path), exist_ok=True)
+    tmp_path = dest_path + ".part"
+    with open(tmp_path, "wb") as f:
+        for chunk in resp.iter_content(chunk_size=65536):
+            f.write(chunk)
+    os.replace(tmp_path, dest_path)
+    return True
+
+
 @dataclass
 class ScrapedItem:
     """One scraped content item, ready to be written to the ContentItem table."""

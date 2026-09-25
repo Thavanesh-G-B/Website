@@ -112,6 +112,17 @@ still count toward the subject-level average on `/progress`).
   scraper function, then upserts into the DB via `get_or_create_subject` /
   `get_or_create_topic` / `upsert_item`. Dedup key for `upsert_item` is
   `(topic_id, type, title)`, so re-running is always safe.
+- `download_official_papers.py` — downloads real JEE Main/NEET PDFs from
+  NTA's own government archive (not through the `sources.json`/registry
+  pipeline above, since this downloads binary PDFs, not structured content
+  yet). **Requires normal internet access to `.nic.in` domains** — doesn't
+  work from a network-restricted sandbox. See its module docstring and the
+  README's "Official exam papers" section for why this exists: two
+  third-party PYQ-database repos were evaluated first and both turned out
+  to be unusable (one paywall-scraped, one mostly fabricated placeholder
+  text despite claiming "verified" answers) — don't trust a repo's README
+  claims without spot-checking actual records. PDF-to-ContentItem
+  extraction is a separate, not-yet-built step.
 
 **Seeding** (`seed.py`): ~30 hand-written sample items, not scraped — kept
 separate from the scraper pipeline so the site has content (including a

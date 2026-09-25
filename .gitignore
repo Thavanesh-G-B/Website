@@ -4,5 +4,6 @@ __pycache__/
 venv/
 data/*.db
 scraper/cache/
+scraper/official_pdfs/
 *.log
 .DS_Store

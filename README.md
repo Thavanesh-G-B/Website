@@ -132,6 +132,38 @@ Prefer open/free sources (open textbooks like OpenStax/NCERT, Wikipedia/
 Wikibooks, question banks explicitly marked reusable) over scraping
 copyrighted material from commercial coaching sites.
 
+### Official exam papers (JEE/NEET PYQs)
+
+Two third-party "PYQ database" GitHub repos were evaluated for this project
+and both turned out unusable on inspection: one reverse-engineered a
+paywalled subscription API, the other's "verified, answer-confidence 1.0"
+questions turned out to be mostly fabricated placeholder text (e.g.
+`question_text: "Refer to official question diagram..."`, `solution:
+"Step-by-step verified solution for..."` -- restating metadata, not an
+actual question or solution). Don't trust a repo's README claims of
+verification without spot-checking the actual data.
+
+`scraper/download_official_papers.py` instead downloads real PDFs directly
+from NTA's own government archive (`jeemain.nta.nic.in`, and a best-guess
+`neet.nta.nic.in` URL that needs verifying):
+
+```bash
+python -m scraper.download_official_papers --exam jee_main --dry-run
+python -m scraper.download_official_papers --exam jee_main --max-pages 5
+python -m scraper.download_official_papers --exam neet --max-pages 5 --base-url "<real NEET archive URL if the default 404s>"
+```
+
+**This needs to run somewhere with normal internet access to government
+domains** -- it will not work from a network-restricted sandbox/CI (this
+project was built in one that blocks `.nic.in`/`.gov.in` outright; that's
+the same failure mode as the Wikipedia scraper hitting a blocked host,
+just for a different domain). PDFs land in `scraper/official_pdfs/<exam>/`
+(gitignored -- these are large binaries, not something to commit).
+
+This only downloads PDFs -- it doesn't extract questions from them yet.
+That's a separate step (`ocr`/PDF-text-extraction script, not yet built)
+best designed against real sample files rather than guessed blind.
+
 ### CLI options
 
 ```bash
