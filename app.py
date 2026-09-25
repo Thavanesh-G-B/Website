@@ -112,6 +112,18 @@ def create_app(test_config: dict | None = None):
             # shows so free users know the content exists.
             item.locked = item.is_premium and not unlocked
             item.options_list = None if item.locked else (json.loads(item.options) if item.options else None)
+            item.option_images_list = (
+                None if item.locked else (json.loads(item.option_images) if item.option_images else None)
+            )
+            # For image-based MCQs there's no human-readable "answer text" to
+            # show -- instead we tell the template which option image (by
+            # index) is the correct one, via quiz.correct_option()'s exact-ID
+            # match. None if unknown (e.g. no matching answer key imported).
+            item.correct_option_index = None
+            if item.option_images_list and not item.locked:
+                correct_id = quiz.correct_option(item)
+                if correct_id and item.options_list and correct_id in item.options_list:
+                    item.correct_option_index = item.options_list.index(correct_id)
 
         return render_template("topic.html", topic=topic, items=items, active_type=item_type)
 
@@ -264,6 +276,7 @@ def create_app(test_config: dict | None = None):
         items = quiz.attempt_questions(attempt)
         for item in items:
             item.options_list = json.loads(item.options) if item.options else []
+            item.option_images_list = json.loads(item.option_images) if item.option_images else None
 
         if request.method == "POST":
             submitted = {
@@ -289,12 +302,14 @@ def create_app(test_config: dict | None = None):
         rows = []
         for item in items:
             options = json.loads(item.options) if item.options else []
+            option_images = json.loads(item.option_images) if item.option_images else None
             correct = quiz.correct_option(item)
             selected = submitted.get(str(item.id))
             rows.append(
                 {
                     "item": item,
                     "options": options,
+                    "option_images": option_images,
                     "correct": correct,
                     "selected": selected,
                     "is_correct": selected == correct,

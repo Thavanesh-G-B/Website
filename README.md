@@ -160,9 +160,37 @@ the same failure mode as the Wikipedia scraper hitting a blocked host,
 just for a different domain). PDFs land in `scraper/official_pdfs/<exam>/`
 (gitignored -- these are large binaries, not something to commit).
 
-This only downloads PDFs -- it doesn't extract questions from them yet.
-That's a separate step (`ocr`/PDF-text-extraction script, not yet built)
-best designed against real sample files rather than guessed blind.
+Once you have a Question Paper PDF (and ideally its matching Answer Key --
+same exam date+shift), `scraper/extract_pyq_images.py` turns them into real
+site content:
+
+```bash
+python -m scraper.extract_pyq_images --question-paper path/to/qp.pdf --dry-run
+python -m scraper.extract_pyq_images \
+  --question-paper path/to/question_paper.pdf \
+  --answer-key path/to/final_answer_key.pdf \
+  --topic-name "JEE Main 2026 Session 2 Shift 1" \
+  --class-level 12
+```
+
+**Why images, not text**: inspecting a real Question Paper PDF confirmed
+question stems and MCQ options are rendered as *embedded images* (for
+anti-cheating randomization + math/chemistry notation), not selectable
+text -- OCR would be unreliable for that kind of content, so `ContentItem`
+gained `body_image`/`option_images` fields to store the real official
+images directly instead of a text transcription (see `models.py`).
+Numerical-answer ("SA") questions are the exception -- their answer is
+plain text embedded right in the Question Paper (`Possible Answers : 42`),
+no external key needed for those.
+
+A Question Paper alone tells you each MCQ's 4 option IDs but not which is
+correct -- that requires the Answer Key PDF *from the same session*
+(mismatched files produce zero ID matches, and the script warns loudly
+when that happens). Without `--answer-key`, MCQs still import as
+browsable content, just excluded from auto-graded mock tests until a
+matching key is imported later (same rule as any other ungradable item).
+Extracted images are saved to `static/pyq_images/<topic-slug>/`
+(gitignored).
 
 ### CLI options
 

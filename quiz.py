@@ -2,12 +2,23 @@
 
 A ContentItem is only usable in an auto-graded mock test if it's multiple
 choice (has `options`) AND its `answer` field identifies which option is
-correct. Existing content writes `answer` as "<exact option text>(optional
-explanation)" -- e.g. options=["x = 2, 3", ...], answer="x = 2, 3 (factor
-as (x-2)(x-3) = 0)". correct_option() extracts the option that `answer`
-starts with. Free-response items (no options, or an answer that doesn't
-match any option) are excluded from mock tests -- they're still browsable
-on the topic page, just not auto-gradable.
+correct. Two ways that's written, both handled by correct_option():
+
+  - Text-based content (hand-authored/scraped): `answer` is written as
+    "<exact option text>(optional explanation)" -- e.g.
+    options=["x = 2, 3", ...], answer="x = 2, 3 (factor as (x-2)(x-3) = 0)".
+    correct_option() extracts the option that `answer` starts with
+    (preferring the longest match, since one option can be a prefix of
+    another -- "5 m/s" vs "5 m/s²").
+  - Image-based content (real PYQs -- see models.ContentItem.option_images):
+    `options` holds each option's raw ID string from the source PDF/answer
+    key (there's no natural-language text to prefix-match against), and
+    `answer` is that exact ID -- so this is an exact match, not a prefix
+    match.
+
+Free-response items (no options, or an answer that doesn't match any
+option) are excluded from mock tests -- they're still browsable on the
+topic page, just not auto-gradable.
 """
 
 from __future__ import annotations
@@ -21,9 +32,9 @@ from models import Attempt, ContentItem, Topic, db
 
 
 def correct_option(item: ContentItem) -> str | None:
-    """Returns the option text that item.answer identifies as correct, or
-    None if the item isn't a gradable MCQ (no options, or answer doesn't
-    match any option)."""
+    """Returns the option (text, or ID string for image-based items) that
+    item.answer identifies as correct, or None if the item isn't a gradable
+    MCQ (no options, or answer doesn't match any option)."""
     if not item.options or not item.answer:
         return None
     try:
@@ -32,8 +43,15 @@ def correct_option(item: ContentItem) -> str | None:
         return None
 
     answer = item.answer.strip()
-    # Prefer the longest matching option, in case one option's text is a
-    # prefix of another's (e.g. "5 m/s" vs "5 m/s²").
+
+    if item.option_images:
+        # Image-based: options are raw ID strings, answer is the correct
+        # ID verbatim (from the official answer key) -- exact match, no
+        # explanatory text to strip via prefix-matching.
+        return answer if answer in options else None
+
+    # Text-based: prefer the longest matching option, in case one option's
+    # text is a prefix of another's (e.g. "5 m/s" vs "5 m/s²").
     matches = [opt for opt in options if answer.startswith(opt.strip())]
     if not matches:
         return None

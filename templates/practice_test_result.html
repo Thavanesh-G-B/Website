@@ -14,14 +14,26 @@
       <span class="badge {{ 'correct-badge' if row.is_correct else 'incorrect-badge' }}">
         {{ 'Correct' if row.is_correct else ('Skipped' if not row.selected else 'Incorrect') }}
       </span>
-      <ol class="options" type="a">
-        {% for option in row.options %}
-          <li class="{{ 'option-correct' if option == row.correct else '' }}{{ ' option-your-pick' if option == row.selected and not row.is_correct else '' }}">
-            {{ option }}
-            {% if option == row.correct %}✓{% elif option == row.selected %}✗{% endif %}
-          </li>
-        {% endfor %}
-      </ol>
+      {% if row.option_images %}
+        <ol class="options options-images" type="a">
+          {% for option_image in row.option_images %}
+            {% set option = row.options[loop.index0] %}
+            <li class="{{ 'option-correct' if option == row.correct else '' }}{{ ' option-your-pick' if option == row.selected and not row.is_correct else '' }}">
+              <img class="option-image" src="{{ url_for('static', filename=option_image) }}" alt="Option {{ loop.index }}">
+              {% if option == row.correct %}<span class="correct-tag">✓ Correct</span>{% elif option == row.selected %}<span class="incorrect-tag">✗ Your answer</span>{% endif %}
+            </li>
+          {% endfor %}
+        </ol>
+      {% else %}
+        <ol class="options" type="a">
+          {% for option in row.options %}
+            <li class="{{ 'option-correct' if option == row.correct else '' }}{{ ' option-your-pick' if option == row.selected and not row.is_correct else '' }}">
+              {{ option }}
+              {% if option == row.correct %}✓{% elif option == row.selected %}✗{% endif %}
+            </li>
+          {% endfor %}
+        </ol>
+      {% endif %}
     </article>
   {% endfor %}
 

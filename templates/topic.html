@@ -36,15 +36,31 @@
         <span class="badge premium-lock">🔒 Premium</span>
         <p class="locked-teaser">This practice question is part of the premium bank. <a href="{{ url_for('upgrade') }}">Upgrade</a> to view it.</p>
       {% else %}
-        <div class="body">{{ item.body }}</div>
+        {% if item.body_image %}
+          <img class="question-image" src="{{ url_for('static', filename=item.body_image) }}" alt="{{ item.title }}">
+        {% else %}
+          <div class="body">{{ item.body }}</div>
+        {% endif %}
 
-        {% if item.options_list %}
+        {% if item.option_images_list %}
+          <ol class="options options-images" type="a">
+            {% for option_image in item.option_images_list %}
+              <li class="{{ 'option-correct' if item.correct_option_index == loop.index0 }}">
+                <img class="option-image" src="{{ url_for('static', filename=option_image) }}" alt="Option {{ loop.index }}">
+                {% if item.correct_option_index == loop.index0 %}<span class="correct-tag">✓ Correct</span>{% endif %}
+              </li>
+            {% endfor %}
+          </ol>
+          {% if item.correct_option_index is none %}
+            <p class="muted small">Answer not yet verified against an official answer key.</p>
+          {% endif %}
+        {% elif item.options_list %}
           <ol class="options" type="a">
             {% for option in item.options_list %}<li>{{ option }}</li>{% endfor %}
           </ol>
         {% endif %}
 
-        {% if item.answer %}
+        {% if item.answer and not item.option_images_list %}
           <details class="answer">
             <summary>Show answer</summary>
             <p>{{ item.answer }}</p>

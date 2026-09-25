@@ -74,6 +74,20 @@ class ContentItem(db.Model):
     answer = db.Column(db.Text, nullable=True)
     difficulty = db.Column(db.String(20), nullable=True)  # easy | medium | hard
 
+    # Image-based content (e.g. real JEE Main PYQs -- their question text and
+    # MCQ options are rendered as images in the source PDF, not extractable
+    # text; OCR is unreliable for math/chemistry notation, so these store the
+    # real official images directly instead of a text transcription). Paths
+    # are relative to static/ (e.g. "pyq_images/jee_main_2026_s2sh1/...jpg").
+    # When body_image is set, templates render it instead of `body` text
+    # (body still holds a short auto-generated caption, for search/a11y).
+    # option_images parallels `options` index-for-index when set: options[i]
+    # holds that option's raw ID string (from the source PDF/answer key),
+    # option_images[i] the image to render for it. See
+    # scraper/extract_pyq_images.py and quiz.py's correct_option().
+    body_image = db.Column(db.String(500), nullable=True)
+    option_images = db.Column(db.Text, nullable=True)  # JSON-encoded list, parallel to `options`
+
     # Provenance -- always recorded so scraped content stays attributable.
     source_name = db.Column(db.String(200), nullable=True)
     source_url = db.Column(db.String(1000), nullable=True)

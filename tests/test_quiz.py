@@ -75,6 +75,31 @@ class QuizTestCase(unittest.TestCase):
         item = self.add_question("Speed?", ["5 m/s", "5 m/s²", "10 m/s"], "5 m/s² (correct)")
         self.assertEqual(quiz.correct_option(item), "5 m/s²")
 
+    def test_correct_option_image_based_uses_exact_id_match(self):
+        # Image-based (real PYQ) items: options are raw ID strings, answer
+        # is the correct ID verbatim -- no prefix-matching against
+        # explanatory text like the text-based path above.
+        item = ContentItem(
+            topic_id=self.topic.id, type="practice_question", title="PYQ Q1", body="PYQ Q1",
+            options=json.dumps(["opt-A", "opt-B", "opt-C"]),
+            option_images=json.dumps(["a.jpg", "b.jpg", "c.jpg"]),
+            answer="opt-B",
+        )
+        db.session.add(item)
+        db.session.commit()
+        self.assertEqual(quiz.correct_option(item), "opt-B")
+
+    def test_correct_option_image_based_none_when_answer_unset(self):
+        item = ContentItem(
+            topic_id=self.topic.id, type="practice_question", title="PYQ Q2", body="PYQ Q2",
+            options=json.dumps(["opt-A", "opt-B"]),
+            option_images=json.dumps(["a.jpg", "b.jpg"]),
+            answer=None,  # e.g. no matching answer key imported yet
+        )
+        db.session.add(item)
+        db.session.commit()
+        self.assertIsNone(quiz.correct_option(item))
+
     # ------------------------------------------------------ gradable_question_pool
 
     def test_pool_excludes_premium_for_free_user(self):
